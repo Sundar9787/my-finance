@@ -1,0 +1,511 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#101827">
+    <meta name="description" content="My personal finance manager">
+
+    <title>My Finance</title>
+
+    <link rel="stylesheet" href="style.css">
+
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#111827">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">₹</div>
+            <div>
+                <h2>My Finance</h2>
+                <p>Personal Manager</p>
+            </div>
+        </div>
+
+        <div class="sidebar-label">MENU</div>
+
+        <nav class="sidebar-nav">
+            <button class="nav-item active"
+                type="button"
+                data-page="home-page"
+                onclick="showPage('home-page')">
+                <span class="nav-icon">⌂</span>
+                <span>Home</span>
+            </button>
+
+            <button class="nav-item"
+                type="button"
+                data-page="insights-page"
+                onclick="showPage('insights-page')">
+                <span class="nav-icon">▥</span>
+                <span>Insights</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-note">
+                <span class="note-icon">✦</span>
+                <p>Take control of your money, one day at a time.</p>
+            </div>
+            <span class="sidebar-version">MY FINANCE · PERSONAL</span>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- HOME PAGE -->
+        <section id="home-page" class="page-section active-page">
+
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">OVERVIEW</p>
+                    <h1>Welcome back!</h1>
+                    <p class="page-subtitle">Here's what's happening with your money.</p>
+                </div>
+
+                <div class="profile">SR</div>
+            </header>
+
+
+            <!-- BALANCE -->
+            <section class="balance-card">
+                <div class="balance-top">
+                    <div>
+                        <p class="balance-label">AVAILABLE BALANCE</p>
+                        <h2 id="balance">₹0.00</h2>
+                        <span class="balance-description">Your current available money</span>
+                    </div>
+                    <div class="balance-icon">₹</div>
+                </div>
+            </section>
+
+
+            <!-- SUMMARY -->
+            <section class="summary">
+
+                <div class="summary-card income">
+                    <div class="summary-card-top">
+                        <span>Total Income</span>
+                        <span class="summary-icon">↗</span>
+                    </div>
+                    <h2 id="income">₹0.00</h2>
+                </div>
+
+                <div class="summary-card expense">
+                    <div class="summary-card-top">
+                        <span>Total Expenses</span>
+                        <span class="summary-icon">↘</span>
+                    </div>
+                    <h2 id="expenses">₹0.00</h2>
+                </div>
+
+                <div class="summary-card receivable">
+                    <div class="summary-card-top">
+                        <span>To Receive</span>
+                        <span class="summary-icon">↓</span>
+                    </div>
+                    <h2 id="receivable">₹0.00</h2>
+                </div>
+
+                <div class="summary-card payable">
+                    <div class="summary-card-top">
+                        <span>You Owe</span>
+                        <span class="summary-icon">↑</span>
+                    </div>
+                    <h2 id="payable">₹0.00</h2>
+                </div>
+
+            </section>
+
+
+            <!-- QUICK ACTIONS -->
+            <section class="content-panel quick-actions-panel">
+
+                <div class="section-heading">
+                    <div>
+                        <h3>Quick Actions</h3>
+                        <p>Manage your money easily.</p>
+                    </div>
+                </div>
+
+                <div class="actions">
+
+                    <button type="button"
+                        class="action-button action-income"
+                        onclick="showSection('income-section')">
+                        <span>＋</span>
+                        Add Income
+                    </button>
+
+                    <button type="button"
+                        class="action-button action-expense"
+                        onclick="showSection('expense-section')">
+                        <span>−</span>
+                        Add Expense
+                    </button>
+
+                    <button type="button"
+                        class="action-button action-receivable"
+                        onclick="showSection('split-section')">
+                        <span>⇄</span>
+                        Friend Owes Me
+                    </button>
+
+                    <button type="button"
+                        class="action-button action-payable"
+                        onclick="showSection('payable-section')">
+                        <span>₹</span>
+                        I Owe Friend
+                    </button>
+
+                    <button type="button"
+                        class="action-button action-settlement"
+                        onclick="showSection('settlement-section')">
+                        <span>✓</span>
+                        Settlements
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ADD INCOME -->
+            <section class="form-section" id="income-section">
+
+                <div class="form-title-row">
+                    <div>
+                        <p class="eyebrow">TRANSACTION</p>
+                        <h3>Add Income</h3>
+                    </div>
+                    <button type="button" class="close-section"
+                        onclick="closeFormSections()">×</button>
+                </div>
+
+                <form id="incomeForm">
+
+                    <label for="incomeSource">Income Source</label>
+                    <input type="text" id="incomeSource"
+                        placeholder="Salary, Bonus..." required>
+
+                    <label for="incomeAmount">Amount (₹)</label>
+                    <input type="number" id="incomeAmount"
+                        min="0.01" step="0.01" required>
+
+                    <label for="incomeDate">Date</label>
+                    <input type="date" id="incomeDate" required>
+
+                    <label for="incomeNotes">Notes</label>
+                    <input type="text" id="incomeNotes"
+                        placeholder="Optional notes">
+
+                    <button type="submit">Save Income</button>
+
+                </form>
+            </section>
+
+
+            <!-- ADD EXPENSE -->
+            <section class="form-section" id="expense-section">
+
+                <div class="form-title-row">
+                    <div>
+                        <p class="eyebrow">TRANSACTION</p>
+                        <h3>Add Expense</h3>
+                    </div>
+                    <button type="button" class="close-section"
+                        onclick="closeFormSections()">×</button>
+                </div>
+
+                <form id="expenseForm">
+
+                    <label for="expenseCategory">Category</label>
+
+                    <select id="expenseCategory" required>
+                        <option value="">Select category</option>
+                        <option value="Rent">Rent</option>
+                        <option value="Food">Food</option>
+                        <option value="Groceries">Groceries</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Electricity">Electricity</option>
+                        <option value="Mobile Recharge">Mobile Recharge</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Medical">Medical</option>
+                        <option value="Other">Other</option>
+                    </select>
+
+                    <label for="expenseDescription">Description</label>
+                    <input type="text" id="expenseDescription"
+                        placeholder="What did you spend on?">
+
+                    <label for="expenseAmount">Amount (₹)</label>
+                    <input type="number" id="expenseAmount"
+                        min="0.01" step="0.01" required>
+
+                    <label for="expenseDate">Date</label>
+                    <input type="date" id="expenseDate" required>
+
+                    <button type="submit">Save Expense</button>
+
+                </form>
+            </section>
+
+
+            <!-- FRIEND OWES ME -->
+            <section class="form-section" id="split-section">
+
+                <div class="form-title-row">
+                    <div>
+                        <p class="eyebrow">SHARED EXPENSE</p>
+                        <h3>Friend Owes Me</h3>
+                    </div>
+                    <button type="button" class="close-section"
+                        onclick="closeFormSections()">×</button>
+                </div>
+
+                <p class="form-description">
+                    You paid the full bill. Your friend needs to repay their share.
+                </p>
+
+                <form id="splitForm">
+
+                    <label for="personName">Friend's Name</label>
+                    <input type="text" id="personName"
+                        placeholder="Roommate / Friend" required>
+
+                    <label for="splitDescription">Description</label>
+                    <input type="text" id="splitDescription"
+                        placeholder="Groceries, Electricity..." required>
+
+                    <label for="splitAmount">Total Amount Paid (₹)</label>
+                    <input type="number" id="splitAmount"
+                        min="0.01" step="0.01" required>
+
+                    <label for="splitDate">Date</label>
+                    <input type="date" id="splitDate" required>
+
+                    <button type="submit">Save Shared Expense</button>
+
+                </form>
+            </section>
+
+
+            <!-- I OWE FRIEND -->
+            <section class="form-section" id="payable-section">
+
+                <div class="form-title-row">
+                    <div>
+                        <p class="eyebrow">SHARED EXPENSE</p>
+                        <h3>I Owe Friend</h3>
+                    </div>
+                    <button type="button" class="close-section"
+                        onclick="closeFormSections()">×</button>
+                </div>
+
+                <p class="form-description">
+                    Your friend paid the full bill. You need to repay your share.
+                </p>
+
+                <form id="payableForm">
+
+                    <label for="debtPersonName">Friend's Name</label>
+                    <input type="text" id="debtPersonName"
+                        placeholder="Enter friend's name" required>
+
+                    <label for="debtDescription">Expense Description</label>
+                    <input type="text" id="debtDescription"
+                        placeholder="Example: Dinner">
+
+                    <label for="debtAmount">Total Bill Amount (₹)</label>
+                    <input type="number" id="debtAmount"
+                        min="0.01" step="0.01"
+                        placeholder="Enter total bill" required>
+
+                    <label for="debtDate">Date</label>
+                    <input type="date" id="debtDate" required>
+
+                    <button type="submit">Save Debt</button>
+
+                </form>
+            </section>
+
+
+            <!-- SETTLEMENT MANAGEMENT -->
+            <section class="form-section" id="settlement-section">
+
+                <div class="form-title-row">
+                    <div>
+                        <p class="eyebrow">SHARED FINANCES</p>
+                        <h3>Friend Settlements</h3>
+                    </div>
+                    <button type="button" class="close-section"
+                        onclick="closeFormSections()">×</button>
+                </div>
+
+                <p class="form-description">
+                    Track money received from friends and money repaid to friends.
+                </p>
+
+                <div id="settlementList">
+                    <p>No outstanding settlements.</p>
+                </div>
+
+            </section>
+
+
+            <!-- TRANSACTION HISTORY -->
+            <section class="content-panel history">
+
+                <div class="section-heading">
+                    <div>
+                        <h3>Transaction History</h3>
+                        <p>Your recent financial activity.</p>
+                    </div>
+                </div>
+
+                <div id="transactionList">
+                    <p class="empty">No transactions yet.</p>
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <!-- INSIGHTS PAGE -->
+        <section id="insights-page" class="page-section">
+
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">ANALYTICS</p>
+                    <h1>Financial Insights</h1>
+                    <p class="page-subtitle">
+                        Understand your spending, savings and financial habits.
+                    </p>
+                </div>
+
+                <div class="profile">SR</div>
+            </header>
+
+
+            <section class="content-panel insights-section" id="insights-section">
+
+                <div class="insights-heading">
+                    <div>
+                        <h3>Monthly Overview</h3>
+                        <p>Review your financial performance for a selected month.</p>
+                    </div>
+                </div>
+
+                <!-- MONTH SELECTOR -->
+                <div class="insights-filter">
+                    <label for="insightsMonth">Select Month</label>
+                    <input type="month" id="insightsMonth">
+                </div>
+
+
+                <!-- MONTHLY SUMMARY -->
+                <div class="insights-grid">
+
+                    <div class="insight-card">
+                        <span>Monthly Income</span>
+                        <h3 id="insightIncome">₹0.00</h3>
+                    </div>
+
+                    <div class="insight-card">
+                        <span>Monthly Expenses</span>
+                        <h3 id="insightExpenses">₹0.00</h3>
+                    </div>
+
+                    <div class="insight-card">
+                        <span>Net Savings</span>
+                        <h3 id="insightSavings">₹0.00</h3>
+                    </div>
+
+                    <div class="insight-card">
+                        <span>Savings Rate</span>
+                        <h3 id="insightSavingsRate">0%</h3>
+                    </div>
+
+                </div>
+
+
+                <!-- CATEGORY BREAKDOWN -->
+                <div class="insight-panel">
+                    <h3>Category-wise Spending</h3>
+                    <div id="categoryBreakdown">
+                        <p class="empty">No expense data available.</p>
+                    </div>
+                </div>
+
+
+                <!-- INCOME VS EXPENSE -->
+                <div class="insight-panel">
+                    <h3>Income vs Expenses</h3>
+                    <div id="incomeExpenseChart">
+                        <p class="empty">No data available.</p>
+                    </div>
+                </div>
+
+
+                <!-- MONTHLY TREND -->
+                <div class="insight-panel">
+                    <h3>Monthly Spending Trend</h3>
+                    <div id="monthlyTrend">
+                        <p class="empty">No monthly data available.</p>
+                    </div>
+                </div>
+
+                <!-- EXTRA CHARTS ARE ADDED BY APP.JS -->
+
+            </section>
+
+        </section>
+
+
+        <footer>
+            My Finance <span>·</span> Personal Finance Manager
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- JAVASCRIPT -->
+<script src="app.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js")
+            .then(() => {
+                console.log("Service Worker registered successfully");
+            })
+            .catch(error => {
+                console.error("Service Worker registration failed:", error);
+            });
+    });
+}
+</script>
+
+
+</body>
+</html>
