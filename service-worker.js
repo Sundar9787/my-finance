@@ -7,7 +7,8 @@ const FILES_TO_CACHE = [
     "./style.css",
     "./app.js",
     "./manifest.json",
-    "./icon-192.png"
+    "./sundars-finance-icon-192.png",
+    "./sundars-finance-icon-512.png"
 ];
 
 // Install and cache app files
